@@ -1,8 +1,15 @@
 <?php
-  
-  echo '読書ログを登録してください' . PHP_EOL;
-  echo '書籍名 : ';
-  echo fgets(STDIN);
+
+echo '読書ログを登録してください' . PHP_EOL;
+echo '書籍名 : ';
+$title = fgets(STDIN);
+
+echo '登録が完了しました' . PHP_EOL .PHP_EOL;
+
+echo '読書ログを表示します' . PHP_EOL;
+echo $title . PHP_EOL;
+
+
 
 
 
