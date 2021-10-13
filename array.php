@@ -9,3 +9,4 @@ var_export($comics);
 var_dump($comics);
 
 echo $comics[2] . PHP_EOL;
+
