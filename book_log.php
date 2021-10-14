@@ -6,6 +6,8 @@ $status = '';
 $review = '';
 $comment = '';
 
+$reviews = [];
+
 while (true) {
     echo '1.読書ログを登録' . PHP_EOL;
     echo '2.読書ログを表示' . PHP_EOL;
@@ -14,7 +16,6 @@ while (true) {
     $num = trim(fgets(STDIN));
 
     if ($num === '1') {
-      //読書ログを登録する
       echo '読書ログを登録してください' . PHP_EOL;
       echo '書籍名 : ';
       $title = trim(fgets(STDIN));
@@ -26,14 +27,21 @@ while (true) {
       $status = trim(fgets(STDIN));
       
       echo '評価(5点満点の整数) : ';
-      $review = trim(fgets(STDIN));
+      $score = trim(fgets(STDIN));
       
       echo '感想 : ';
-      $comment = trim(fgets(STDIN));
+      $summary = trim(fgets(STDIN));
+      
+      $reviews[] = [
+        'title' => $title,
+        'author' => $author,
+        'status' => $status,
+        'score' => $score,
+        'summary' => $summary,
+        ];
       
       echo '登録が完了しました' . PHP_EOL .PHP_EOL;
     } elseif ($num === '2'){
-      //読書ログを表示する
       echo '読書ログを表示します' . PHP_EOL;
       echo '書籍名 : ' . $title . PHP_EOL;
       echo '著者名 : ' . $author . PHP_EOL;
@@ -41,8 +49,8 @@ while (true) {
       echo '評価 : ' . $review . PHP_EOL;
       echo '感想 : '  .$comment . PHP_EOL;
     } elseif ($num === '9') {
-      //アプリケーションを終了する
       break;
     }
 }
   
+var_export($reviews);
