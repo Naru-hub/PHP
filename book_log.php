@@ -1,11 +1,5 @@
 <?php
 
-$title = '';
-$author = '';
-$status = '';
-$review = '';
-$comment = '';
-
 $reviews = [];
 
 while (true) {
@@ -42,15 +36,18 @@ while (true) {
       
       echo '登録が完了しました' . PHP_EOL .PHP_EOL;
     } elseif ($num === '2'){
-      echo '読書ログを表示します' . PHP_EOL;
-      echo '書籍名 : ' . $title . PHP_EOL;
-      echo '著者名 : ' . $author . PHP_EOL;
-      echo '読書状況 : ' . $status . PHP_EOL;
-      echo '評価 : ' . $review . PHP_EOL;
-      echo '感想 : '  .$comment . PHP_EOL;
+      echo '登録されている読書ログを表示します' . PHP_EOL;
+      
+      foreach($reviews as $review) {
+          echo '書籍名 : ' . $review['title'] . PHP_EOL;
+          echo '著者名 : ' . $review['author'] . PHP_EOL;
+          echo '読書状況 : ' . $review['status'] . PHP_EOL;
+          echo '評価 : ' . $review['score'] . PHP_EOL;
+          echo '感想 : '  .$review['summary'] . PHP_EOL;
+          echo '____________' . PHP_EOL;
+      }
     } elseif ($num === '9') {
       break;
     }
 }
   
-var_export($reviews);
