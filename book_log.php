@@ -1,16 +1,8 @@
 <?php
 
-$reviews = [];
-
-while (true) {
-    echo '1.読書ログを登録' . PHP_EOL;
-    echo '2.読書ログを表示' . PHP_EOL;
-    echo '3.アプリケーションを終了' . PHP_EOL;
-    echo '番号を選択してください(1,2,9) : ';
-    $num = trim(fgets(STDIN));
-
-    if ($num === '1') {
-      echo '読書ログを登録してください' . PHP_EOL;
+function createReview()
+{
+  echo '読書ログを登録してください' . PHP_EOL;
       echo '書籍名 : ';
       $title = trim(fgets(STDIN));
       
@@ -26,15 +18,30 @@ while (true) {
       echo '感想 : ';
       $summary = trim(fgets(STDIN));
       
-      $reviews[] = [
+      echo '登録が完了しました' . PHP_EOL .PHP_EOL;
+      
+      return [
         'title' => $title,
         'author' => $author,
         'status' => $status,
         'score' => $score,
         'summary' => $summary,
         ];
+}
+
+$reviews = [];
+
+while (true) {
+    echo '1.読書ログを登録' . PHP_EOL;
+    echo '2.読書ログを表示' . PHP_EOL;
+    echo '3.アプリケーションを終了' . PHP_EOL;
+    echo '番号を選択してください(1,2,9) : ';
+    $num = trim(fgets(STDIN));
+
+    if ($num === '1') {
+      $reviews[] = createReview();
       
-      echo '登録が完了しました' . PHP_EOL .PHP_EOL;
+      
     } elseif ($num === '2'){
       echo '登録されている読書ログを表示します' . PHP_EOL;
       
