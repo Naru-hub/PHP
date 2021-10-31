@@ -7,16 +7,37 @@ function validate($review)
   //書籍名
   if (!strlen($review['title'])) {
     $errors['title'] = '書籍名を入力してください';
-  } elseif (strlen($review['title'])) > 255) {
+  } elseif (strlen($review['title']) > 255) {
     $errors['title'] = '書籍名は255文字以内で入力してください';
+  }
+  
+  //著者名
+  if (!strlen($review['author'])) {
+    $errors['author'] = '著者名を入力してください';
+  } elseif (strlen($review['author']) > 100) {
+    $errors['author'] = '著者名は100文字以内で入力してください';
+  }
+  
+  //読書状況
+  if (!in_array($review['status'], ['未読','読んでる','読了'], true)) {
+    $errors['status'] = '読書状況は「未読」「読んでる」「読了」のいずれかを入力してください';
+  }
+  
+  //評価
+  if ($review['score'] < 1 || $review['score'] > 5) {
+      $errors['score'] = '評価は1~5の整数を入力してください';
+      
+  //感想
+  if (!strlen($review['summary'])) {
+    $errors['summary'] = '感想を入力してください';
+  } elseif (!strlen($review['summary']) > 1000) {
+    $errors['summary'] = '感想は1,000文字以内で入力してください';
   }
   
   return $errors;
 }
 
-  //評価
-  if ($review['score'] < 1 || $review['score'] > 5) {
-      $errors['score'] = '評価は1~5の整数を入力してください';
+  
   }
 
 function createReview($link)
