@@ -1,13 +1,13 @@
 <? php
 
-function validate($reviews) 
+function validate($review) 
 {
   $errors = [];
   
   //書籍名
-  if (!strlen($reviews['title'])) {
+  if (!strlen($review['title'])) {
     $errors['title'] = '書籍名を入力してください';
-  } elseif (strlen($reviews['title'])) > 255) {
+  } elseif (strlen($review['title'])) > 255) {
     $errors['title'] = '書籍名は255文字以内で入力してください';
   }
   
@@ -15,29 +15,29 @@ function validate($reviews)
 }
 
   //評価
-  if ($reviews['score'] < 1 || $reviews['score'] > 5) {
+  if ($review['score'] < 1 || $review['score'] > 5) {
       $errors['score'] = '評価は1~5の整数を入力してください';
   }
 
 function createReview($link)
 {
-    $reviews = [];
+    $review = [];
     
     echo '読書ログを登録してください' . PHP_EOL;
     echo '書籍名 : ';
-    $reviews['title'] = trim(fgets(STDIN));
+    $review['title'] = trim(fgets(STDIN));
     
     echo '著者名 : ';
-    $reviews['author'] = trim(fgets(STDIN));
+    $review['author'] = trim(fgets(STDIN));
     
     echo '読書状況(未読,読んでる,読了) : ';
-    $reviews['status'] = trim(fgets(STDIN));
+    $review['status'] = trim(fgets(STDIN));
     
     echo '評価(5点満点の整数) : ';
-    $reviews['score'] = (int) trim(fgets(STDIN));
+    $review['score'] = (int) trim(fgets(STDIN));
     
     echo '感想 : ';
-    $reviews['summary'] = trim(fgets(STDIN));
+    $review['summary'] = trim(fgets(STDIN));
     
     $validated = validate($reviews);
     if (count($validated) > 0) {
@@ -56,11 +56,11 @@ INSERT INTO reviews (
     score,
     summary
 )  VALUES (
-    "{$reviews['title']}",
-    "{$reviews['author']}",
-    "{$reviews['status']}",
-    "{$reviews['score']}",
-    "{$reviews['summary']}",
+    "{$review['title']}",
+    "{$review['author']}",
+    "{$review['status']}",
+    "{$review['score']}",
+    "{$review['summary']}",
 ) 
 EOT;
 
@@ -87,7 +87,21 @@ function listReviews($reviews)
     }
 }
 
+function dbConnect ()
+{
+    $link = mysqli_connect('db','book_log','pass','book_log');
+    if (!$link) {
+       echo 'Error: データベースに接続できません' . PHP_EOL;
+       echo 'Debugging error: ' . mysqli_connect_error() . PHP_EOL;
+       exit;
+    }
+    
+    echo 'データベースと接続しました' .PHP_EOL;
+    return $link;
+}
+
 $reviews = [];
+$link = dbConnect();
 
 While (true) {
     echo '1.読書ログを登録' . PHP_EOL;
