@@ -94,11 +94,14 @@ EOT;
     }
 }
 
-function listReviews($reviews) 
+function listReviews($link) 
 {
     echo '登録されている読書ログを表示します' . PHP_EOL;
+    
+    $sql = 'SELECT id, title, author, status, score, summary FROM reviews';
+    $results = mysqli_query($link, $sql);
       
-    foreach($reviews as $review) {
+    while ($review = mysqli_fetch_assoc($results)) {
         echo '書籍名 : ' . $review['title'] . PHP_EOL;
         echo '著者名 : ' . $review['author'] . PHP_EOL;
         echo '読書状況 : ' . $review['status'] . PHP_EOL;
@@ -106,6 +109,7 @@ function listReviews($reviews)
         echo '感想 : '  .$review['summary'] . PHP_EOL;
         echo '____________' . PHP_EOL;
     }
+    mysqli_free_result($results);
 }
 
 function dbConnect ()
@@ -116,13 +120,10 @@ function dbConnect ()
        echo 'Debugging error: ' . mysqli_connect_error() . PHP_EOL;
        exit;
     }
-    
-    echo 'データベースと接続しました' .PHP_EOL;
     return $link;
 }
 
-$reviews = [];
-$link = dbConnect();
+// $link = dbConnect();
 
 While (true) {
     echo '1.読書ログを登録' . PHP_EOL;
@@ -134,7 +135,7 @@ While (true) {
     if ($num === '1') {
       createReview($link);
     } elseif ($num === '2') {
-      listReviews($reviews);
+      listReviews($link);
     } elseif ($num === '9') {
       mysql_close($link);
       break;
